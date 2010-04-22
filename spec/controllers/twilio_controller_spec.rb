@@ -4,8 +4,22 @@ describe TwilioController do
 
   describe "POST from twilio" do
     it "should receive a POST with parameters and reply with a redirect" do
-      post 'sms', {:SmsSid => '11111111111111111111111111111111', :AccountSid => '2222222',
-                   :From => '555-5555', :To => '333-3333', :Body => 'This is a message' }
+      post 'sms', {
+              "FromState"=>"NY",
+              "ToState"=>"CA",
+              "SmsMessageSid"=>"SM1588a4a8893f8756546c25149f1cfb2f",
+              "AccountSid"=>"AC07c95523d2581cd64b03b58419fe8dff",
+              "Body"=>"test MSG",
+              "FromCity"=>"NEW YORK",
+              "From"=>"9176535246",
+              "SmsStatus"=>"received",
+              "To"=>"4155992671",
+              "FromCountry"=>"US",
+              "FromZip"=>"11235",
+              "ToCity"=>"NOVATO",
+              "ToCountry"=>"US", 
+              "ToZip"=>"94949",
+              "SmsSid"=>"SM1588a4a8893f8756546c25149f1cfb2f"}
       response.should be_success
     end
   end
