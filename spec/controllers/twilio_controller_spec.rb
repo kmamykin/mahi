@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe TwilioController do
 
-  describe "POST from twilio" do
-    it "should receive a POST with parameters and reply with a redirect" do
-      post 'sms', {
+  before(:all) do
+    @all_possible_params = {
               "FromState"=>"NY",
               "ToState"=>"CA",
               "SmsMessageSid"=>"SM1588a4a8893f8756546c25149f1cfb2f",
@@ -17,17 +16,18 @@ describe TwilioController do
               "FromCountry"=>"US",
               "FromZip"=>"11235",
               "ToCity"=>"NOVATO",
-              "ToCountry"=>"US", 
+              "ToCountry"=>"US",
               "ToZip"=>"94949",
               "SmsSid"=>"SM1588a4a8893f8756546c25149f1cfb2f"}
-      response.should be_success
-    end
   end
 
-  describe "GET 'recv_sms'" do
-    it "should be successful" do
-      get 'sms'
+  describe "POST from twilio" do
+    it "should receive a POST with parameters and reply with a redirect" do
+      post 'sms', @all_possible_params
+      assigns[:message].should == "Thank you for sms"
       response.should be_success
+      response.should render_template("twilio/sms.xml.builder")
+      response.content_type.should == 'application/xml'
     end
   end
 end
