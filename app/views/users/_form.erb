@@ -1,11 +1,9 @@
-<%= form.label :login %><br />
-<%= form.text_field :first_name %><br />
-<%= form.text_field :last_name %><br />
-<%= form.text_field :email %><br />
-<%= form.text_field :login %><br />
-<br />
-<%= form.label :password, form.object.new_record? ? nil : "Change password" %><br />
-<%= form.password_field :password %><br />
-<br />
-<%= form.label :password_confirmation %><br />
-<%= form.password_field :password_confirmation %><br />
+<% form.inputs :id => "userinfo" do %>
+  <%= form.input :first_name, :label => 'First name' %>
+  <%= form.input :last_name, :label => 'Last name' %>
+  <%= form.input :phone_number, :label => 'Phone number' %>
+  <%= form.input :login, :label => 'Login' %>
+  <%= form.input :email, :label => 'Email' %>
+  <%= form.input :password, :label => form.object.new_record? ? nil : "Change password" %>
+  <%= form.input :password_confirmation %>
+<% end %>

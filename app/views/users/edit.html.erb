@@ -1,9 +1,12 @@
 <h1>Edit My Account</h1>
 
-<% form_for @user, :url => account_path do |f| %>
-  <%= f.error_messages %>
+<% semantic_form_for @user, :url => account_path do |f| %>
+  <%= f.semantic_errors %>
   <%= render :partial => "form", :object => f %>
-  <%= f.submit "Update" %>
+  <% f.buttons do %>
+    <%= f.submit "Update" %>
+    <br/><%= link_to "My Profile", account_path %>
+  <% end %>
 <% end %>
 
-<br /><%= link_to "My Profile", account_path %>
+

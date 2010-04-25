@@ -1,7 +1,9 @@
 <h1>Register</h1>
 
-<% form_for @user, :url => account_path do |f| %>
-  <%= f.error_messages %>
+<% semantic_form_for @user, :url => account_path do |f| %>
+  <%= f.semantic_errors %>
   <%= render :partial => "form", :object => f %>
-  <%= f.submit "Register" %>
+  <% f.buttons do %>
+    <%= f.submit "Register" %>
+  <% end %>
 <% end %>
