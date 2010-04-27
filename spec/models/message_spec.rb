@@ -1,4 +1,5 @@
 require 'spec'
+require "spec_helper"
 
 describe "Message" do
   before(:each) do
