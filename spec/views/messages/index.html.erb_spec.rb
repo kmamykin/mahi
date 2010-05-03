@@ -8,7 +8,7 @@ describe "/messages/index.html.erb" do
       stub_model(Message,
         :text => "value for text"
       ),
-      stub_model(Message,
+      stub_model(SmsMessage,
         :text => "value for text"
       )
     ]

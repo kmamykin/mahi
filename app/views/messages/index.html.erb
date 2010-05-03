@@ -9,9 +9,9 @@
 <% @messages.each do |message| %>
   <tr>
     <td><%=h message.text %></td>
-    <td><%= link_to 'Show', message %></td>
+    <td><%= link_to 'Show', message_path(message) %></td>
     <td><%= link_to 'Edit', edit_message_path(message) %></td>
-    <td><%= link_to 'Destroy', message, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', message_path(message), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
