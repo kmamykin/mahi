@@ -15,6 +15,11 @@ describe MessagesController do
       get :index
       assigns[:messages].should == [mock_message]
     end
+    it "assigns @user to current_user" do
+      current_user.should_receive(:messages).and_return([mock_message])
+      get :index
+      assigns[:user].should == current_user
+    end
   end
 
   describe "GET show" do

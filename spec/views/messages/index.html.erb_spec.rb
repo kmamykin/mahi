@@ -12,6 +12,7 @@ describe "/messages/index.html.erb" do
         :text => "value for text"
       )
     ]
+    assigns[:user] = stub_model(User, :id => 123)
   end
 
   it "renders a list of messages" do

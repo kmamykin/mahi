@@ -4,6 +4,7 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.xml
   def index
+    @user = current_user
     @messages = current_user.messages
 
     respond_to do |format|
