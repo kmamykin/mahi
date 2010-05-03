@@ -1,14 +1,17 @@
 require 'spec_helper'
 
 describe MessagesController do
-
+  before(:each) do
+    login
+  end
+  
   def mock_message(stubs={})
     @mock_message ||= mock_model(Message, stubs)
   end
 
   describe "GET index" do
     it "assigns all messages as @messages" do
-      Message.stub(:find).with(:all).and_return([mock_message])
+      current_user.should_receive(:messages).and_return([mock_message])
       get :index
       assigns[:messages].should == [mock_message]
     end
@@ -16,7 +19,7 @@ describe MessagesController do
 
   describe "GET show" do
     it "assigns the requested message as @message" do
-      Message.stub(:find).with("37").and_return(mock_message)
+      Message.should_receive(:find).with("37", :conditions => {:user_id => current_user.id}).and_return(mock_message)
       get :show, :id => "37"
       assigns[:message].should equal(mock_message)
     end
@@ -24,7 +27,7 @@ describe MessagesController do
 
   describe "GET new" do
     it "assigns a new message as @message" do
-      Message.stub(:new).and_return(mock_message)
+      Message.should_receive(:new).and_return(mock_message)
       get :new
       assigns[:message].should equal(mock_message)
     end
@@ -32,23 +35,24 @@ describe MessagesController do
 
   describe "GET edit" do
     it "assigns the requested message as @message" do
-      Message.stub(:find).with("37").and_return(mock_message)
+      Message.should_receive(:find).with("37", :conditions => {:user_id => current_user.id}).and_return(mock_message)
       get :edit, :id => "37"
       assigns[:message].should equal(mock_message)
     end
   end
 
   describe "POST create" do
-
     describe "with valid params" do
       it "assigns a newly created message as @message" do
-        Message.stub(:new).with({'these' => 'params'}).and_return(mock_message(:save => true))
+        mock_message(:save => true, :user= => current_user)
+        Message.should_receive(:new).with({'these' => 'params'}).and_return(mock_message)
         post :create, :message => {:these => 'params'}
         assigns[:message].should equal(mock_message)
       end
 
       it "redirects to the created message" do
-        Message.stub(:new).and_return(mock_message(:save => true))
+        mock_message(:save => true, :user= => current_user)
+        Message.should_receive(:new).with({}).and_return(mock_message)
         post :create, :message => {}
         response.should redirect_to(message_url(mock_message))
       end
@@ -56,13 +60,14 @@ describe MessagesController do
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved message as @message" do
-        Message.stub(:new).with({'these' => 'params'}).and_return(mock_message(:save => false))
+        mock_message(:save => false, :user= => current_user)
+        Message.should_receive(:new).with({'these' => 'params'}).and_return(mock_message)
         post :create, :message => {:these => 'params'}
         assigns[:message].should equal(mock_message)
       end
 
       it "re-renders the 'new' template" do
-        Message.stub(:new).and_return(mock_message(:save => false))
+        Message.should_receive(:new).with({}).and_return(mock_message(:save => false, :user= => current_user))
         post :create, :message => {}
         response.should render_template('new')
       end
@@ -80,13 +85,13 @@ describe MessagesController do
       end
 
       it "assigns the requested message as @message" do
-        Message.stub(:find).and_return(mock_message(:update_attributes => true))
+        Message.should_receive(:find).and_return(mock_message(:update_attributes => true))
         put :update, :id => "1"
         assigns[:message].should equal(mock_message)
       end
 
       it "redirects to the message" do
-        Message.stub(:find).and_return(mock_message(:update_attributes => true))
+        Message.should_receive(:find).and_return(mock_message(:update_attributes => true))
         put :update, :id => "1"
         response.should redirect_to(message_url(mock_message))
       end
@@ -100,13 +105,13 @@ describe MessagesController do
       end
 
       it "assigns the message as @message" do
-        Message.stub(:find).and_return(mock_message(:update_attributes => false))
+        Message.should_receive(:find).and_return(mock_message(:update_attributes => false))
         put :update, :id => "1"
         assigns[:message].should equal(mock_message)
       end
 
       it "re-renders the 'edit' template" do
-        Message.stub(:find).and_return(mock_message(:update_attributes => false))
+        Message.should_receive(:find).and_return(mock_message(:update_attributes => false))
         put :update, :id => "1"
         response.should render_template('edit')
       end
@@ -122,7 +127,7 @@ describe MessagesController do
     end
 
     it "redirects to the messages list" do
-      Message.stub(:find).and_return(mock_message(:destroy => true))
+      Message.should_receive(:find).and_return(mock_message(:destroy => true))
       delete :destroy, :id => "1"
       response.should redirect_to(messages_url)
     end

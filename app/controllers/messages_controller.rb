@@ -1,8 +1,10 @@
 class MessagesController < ApplicationController
+  before_filter :require_user
+
   # GET /messages
   # GET /messages.xml
   def index
-    @messages = Message.all
+    @messages = current_user.messages
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +15,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.xml
   def show
-    @message = Message.find(params[:id])
+    @message = Message.find(params[:id], :conditions => {:user_id => current_user.id})
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,13 +36,14 @@ class MessagesController < ApplicationController
 
   # GET /messages/1/edit
   def edit
-    @message = Message.find(params[:id])
+    @message = Message.find(params[:id], :conditions => {:user_id => current_user.id})
   end
 
   # POST /messages
   # POST /messages.xml
   def create
     @message = Message.new(params[:message])
+    @message.user = current_user
 
     respond_to do |format|
       if @message.save
