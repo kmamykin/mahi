@@ -38,6 +38,15 @@ Rails::Initializer.run do |config|
   config.gem "paperclip", :version => "2.3.1.1"
   config.gem "authlogic", :version => "2.1.3"
   config.gem "formtastic", :version => "0.9.8"
+  config.gem "sqlite3-ruby", :lib => "sqlite3", :version => "1.2.5"
+  config.gem "aws-s3", :lib => "aws/s3", :version => "0.6.2"
+  #config.gem "configuration", :version => "1.1.0"
+  #config.gem "json_pure", :version => "1.2.2"
+  #config.gem "launchy", :version => "0.3.5"
+  #config.gem "mail", :version => "2.2.1"
+  #config.gem "rest-client", :lib => "rest", :version => "1.4.2"
+  #config.gem "xml-simple", :version => "1.0.12"
+
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
